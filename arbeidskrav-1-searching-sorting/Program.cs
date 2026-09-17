@@ -4,6 +4,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        Phonebook phonebook = Phonebook.Load("phonebook.csv");
+        Console.WriteLine(phonebook.Count);
+        Console.WriteLine(phonebook.GetContact(0));
+        Console.WriteLine(phonebook.GetContact(phonebook.Count - 1));
     }
 }
