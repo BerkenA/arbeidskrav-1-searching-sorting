@@ -25,9 +25,11 @@ of data and your own reflection.** Padding counts against you.
 absent, and why is that number the same for every absent value? Compare your
 best case and worst case figures against the theoretical O(1) and O(n). Does a
 search that finds nine matches cost more than one that finds none?]
-best-case result: 9 matches, 200 comparisons for LastName "Bjerke".
-worst-case result: 7 matches, 200 comparisons for LastName "Hansen".
-absent value: 0 matches, 200 comparisons for LastName "Rønning".
+Every one of my four searches needed exactly 200 comparisons regardless of target position.
+Even though a match is found in the first spot as is with Bjerke, there is still a possibility
+of more people sharing that last name somewhere else in the array. Because of this the search has to loop over the
+entire array regardless of whether it finds 9 matches or none.
+
 
 ## 2. Sorting
 
@@ -65,6 +67,8 @@ contacts, and how does that compare with log2(200)? How do you guarantee the
 first occurrence when a surname is duplicated? Sorting cost you the comparisons
 in part 2: how many searches must you perform before sorting first pays for
 itself?]
+
+
 
 ## 4. Insight
 
