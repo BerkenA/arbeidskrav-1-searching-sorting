@@ -35,7 +35,7 @@ public class Phonebook
         return new Phonebook(contacts);
     }
 
-    string Key(Contact contact, Field field)
+    public static string Key(Contact contact, Field field)
     {
         switch (field)
         {
