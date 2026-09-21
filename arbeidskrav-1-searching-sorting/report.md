@@ -14,17 +14,20 @@ of data and your own reflection.** Padding counts against you.
 
 ## 1. Searching unsorted data
 
-| Field | Target | Case         | Matches | Comparisons |
-|---|---|--------------|---|---|
-| LastName | | Bjerke       | | |
-| LastName | | Hansen       | | |
-| LastName | | absent value | | |
-| Mobile | | absent value | | |
+| Field    | Target   | Case         | Matches | Comparisons |
+|----------|----------|--------------|---------|-------------|
+| LastName | Bjerke   | Best case    | 9       | 200         |
+| LastName | Hansen   | Worst case   | 7       | 200         |
+| LastName | Rønning  | absent value | 0       | 200         |
+| Mobile   | 12345678 | absent value | 0       | 200         |
 
 **Reflection.** [How many comparisons does a linear search need when the value is
 absent, and why is that number the same for every absent value? Compare your
 best case and worst case figures against the theoretical O(1) and O(n). Does a
 search that finds nine matches cost more than one that finds none?]
+best-case result: 9 matches, 200 comparisons for LastName "Bjerke".
+worst-case result: 7 matches, 200 comparisons for LastName "Hansen".
+absent value: 0 matches, 200 comparisons for LastName "Rønning".
 
 ## 2. Sorting
 
