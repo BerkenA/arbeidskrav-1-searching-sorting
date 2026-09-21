@@ -14,10 +14,10 @@ of data and your own reflection.** Padding counts against you.
 
 ## 1. Searching unsorted data
 
-| Field | Target | Case | Matches | Comparisons |
-|---|---|---|---|---|
-| LastName | | first record (best case) | | |
-| LastName | | last record (worst case) | | |
+| Field | Target | Case         | Matches | Comparisons |
+|---|---|--------------|---|---|
+| LastName | | Bjerke       | | |
+| LastName | | Hansen       | | |
 | LastName | | absent value | | |
 | Mobile | | absent value | | |
 

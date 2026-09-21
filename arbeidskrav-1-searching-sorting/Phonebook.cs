@@ -29,4 +29,19 @@ public class Phonebook
 
         return new Phonebook(contacts);
     }
+
+    string Key(Contact contact, Field field)
+    {
+        switch (field)
+        {
+            case Field.FirstName:
+                return contact.FirstName;
+            case Field.LastName:
+                return contact.LastName;
+            case Field.Mobile:
+                return contact.Mobile;
+            default:
+                return "";
+        }
+    }
 }
