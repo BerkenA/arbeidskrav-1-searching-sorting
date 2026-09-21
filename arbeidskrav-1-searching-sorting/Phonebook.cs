@@ -3,6 +3,11 @@
 public class Phonebook
 {
     private readonly Contact[] _contacts;
+    private int _comparisons;
+    public int Comparisons
+    {
+        get { return _comparisons; }
+    }
     public Phonebook(Contact[] contacts)
     {
         _contacts = contacts;
@@ -43,5 +48,22 @@ public class Phonebook
             default:
                 return "";
         }
+    }
+
+    public Contact[] LinearSearch(Field field, string target)
+    {
+        _comparisons = 0;
+        List<Contact> matches = new List<Contact>();
+        
+        for (int i = 0; i < _contacts.Length; i++)
+        {
+            Contact current =  _contacts[i];
+            _comparisons++;
+            if (string.Equals(Key(current, field), target, StringComparison.OrdinalIgnoreCase))
+            {
+                matches.Add(current);
+            }
+        }
+        return matches.ToArray();
     }
 }
