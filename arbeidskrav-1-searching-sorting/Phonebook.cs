@@ -66,4 +66,15 @@ public class Phonebook
         }
         return matches.ToArray();
     }
+
+    public Contact[] ToArray()
+    {
+        Contact[] copy = new Contact[_contacts.Length];
+        for (int i = 0; i < _contacts.Length; i++)
+        {
+            copy[i] = _contacts[i];
+        }
+
+        return copy;
+    }
 }
