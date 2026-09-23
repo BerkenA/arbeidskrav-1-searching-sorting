@@ -23,6 +23,8 @@ public class ContactComparer : IComparer<Contact>
 
 public static class Sorting
 {
+    private static int _mergeComparisons;
+    private static int _mergeSwaps;
     public static void InsertionSort<T>(T[] items, IComparer<T> comparer, out int comparisons, out int swaps)
     {
         comparisons = 0;
@@ -44,6 +46,69 @@ public static class Sorting
                 j--;
             }
             items[j + 1] = current;
+        }
+    }
+
+    public static void MergeSort<T>(T[] items, IComparer<T> comparer, out int comparisons, out int swaps)
+    {
+        _mergeComparisons = 0;
+        _mergeSwaps = 0;
+        MergeSortRange(items, 0, items.Length -1, comparer);
+        comparisons = _mergeComparisons;
+        swaps = _mergeSwaps;
+    }
+
+    private static void MergeSortRange<T>(T[] items, int low, int high, IComparer<T> comparer)
+    {
+        if (low < high)
+        {
+            int mid = (low + high) / 2;
+            MergeSortRange(items, low, mid, comparer);
+            MergeSortRange(items, mid +1, high, comparer);
+            int leftIndex = low;
+            int rightIndex = mid + 1;
+            int tempIndex = 0;
+            T[] temp = new T[high - low + 1];
+
+            while (leftIndex <= mid && rightIndex <= high)
+            {
+                _mergeComparisons++;
+                if (comparer.Compare(items[leftIndex], items[rightIndex]) <= 0)
+                {
+                    temp[tempIndex] = items[leftIndex];
+                    _mergeSwaps++;
+                    leftIndex++;
+                }
+                else
+                {
+                    temp[tempIndex] = items[rightIndex];
+                    _mergeSwaps++;
+                    rightIndex++;
+                }
+
+                tempIndex++;
+            }
+
+            while (leftIndex <= mid)
+            {
+                temp[tempIndex] = items[leftIndex];
+                _mergeSwaps++;
+                leftIndex++;
+                tempIndex++;
+            }
+
+            while (rightIndex <= high)
+            {
+                temp[tempIndex] = items[rightIndex];
+                _mergeSwaps++;
+                rightIndex++;
+                tempIndex++;
+            }
+
+            for (int i = 0; i < temp.Length; i++)
+            {
+                items[low + i] = temp[i];
+            }
         }
     }
 }
