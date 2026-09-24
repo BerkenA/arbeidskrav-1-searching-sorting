@@ -4,10 +4,18 @@ public class Phonebook
 {
     private readonly Contact[] _contacts;
     private int _comparisons;
+    
+    /// <summary>
+    /// How many comparisons the last search made.
+    /// </summary>
     public int Comparisons
     {
         get { return _comparisons; }
     }
+    
+    /// <summary>
+    /// Constructor for building a Phonebook directly from an array of contacts.
+    /// </summary>
     public Phonebook(Contact[] contacts)
     {
         if (contacts == null)
@@ -16,15 +24,26 @@ public class Phonebook
         }
         _contacts = contacts;
     }
+    
+    /// <summary>
+    /// How many contacts are in the phonebook.
+    /// </summary>
     public int Count
     {
         get { return _contacts.Length; }
     }
+    
+    /// <summary>
+    /// Gets the contact at a given index.
+    /// </summary>
     public Contact GetContact(int index)
     {
         return _contacts[index];
     }
     
+    /// <summary>
+    /// Loads all contacts from a CSV file and builds a Phonebook from them.
+    /// </summary>
     public static Phonebook Load(string csvPath)
     {
         if (!File.Exists(csvPath))
@@ -44,6 +63,10 @@ public class Phonebook
         return new Phonebook(contacts);
     }
 
+    /// <summary>
+    /// Gets the value of a contact for whichever field is asked for
+    /// (FirstName, LastName, or Mobile).
+    /// </summary>
     public static string Key(Contact contact, Field field)
     {
         switch (field)
@@ -59,6 +82,12 @@ public class Phonebook
         }
     }
 
+    /// <summary>
+    /// Looks through every contact and finds the ones where the chosen field
+    /// matches the target exactly, ignoring upper and lower case. Gives back
+    /// an empty array if nothing matches. Has to check every contact every
+    /// time, so it's O(n).
+    /// </summary>
     public Contact[] LinearSearch(Field field, string target)
     {
         _comparisons = 0;
@@ -76,6 +105,10 @@ public class Phonebook
         return matches.ToArray();
     }
 
+    /// <summary>
+    /// Makes a copy of the contacts array so it can be sorted or changed
+    /// without touching the original.
+    /// </summary>
     public Contact[] ToArray()
     {
         Contact[] copy = new Contact[_contacts.Length];
@@ -87,6 +120,12 @@ public class Phonebook
         return copy;
     }
 
+    /// <summary>
+    /// Finds a contact by cutting the search area in half each time instead of
+    /// checking one by one. Only works if the array is already sorted by the
+    /// field you're searching on. If there are duplicates it finds the first
+    /// one. Much faster than linear search, O(log n).
+    /// </summary>
     public int BinarySearch(Field field, String target)
     {
         _comparisons = 0;
