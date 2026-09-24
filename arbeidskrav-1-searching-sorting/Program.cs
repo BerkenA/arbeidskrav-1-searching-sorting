@@ -59,12 +59,6 @@ class Program
         Console.WriteLine(oneArray[0]);
         Console.WriteLine(cmpOne);
         
-        int[] numbers2 = { 5, 2, 8, 1, 9, 3 };
-        Sorting.MergeSort(numbers2, Comparer<int>.Default, out int cmp5, out int swp5);
-        Console.WriteLine(string.Join(", ", numbers2));
-        Console.WriteLine(cmp5);
-        Console.WriteLine(swp5);
-        
         Contact[] mSortMeLastName = phonebook.ToArray();
         Sorting.MergeSort(mSortMeLastName, new ContactComparer(Field.LastName, SortOrder.Ascending), out int mCmpLastName, out int mSwpLastName);
         Console.WriteLine(mSortMeLastName[0]);
@@ -154,8 +148,9 @@ class Program
         Phonebook pbEmpty = new Phonebook(new Contact[0]);
         Phonebook pbOne = new Phonebook(new Contact[] { phonebook.GetContact(0) });
         
-        int bsMobileTest = pbMobile.BinarySearch(Field.Mobile, "97756218");
-        Console.WriteLine("Test 1 (Mobile, known value): " + (bsMobileTest != -1 ? "PASS" : "FAIL") + " (index=" + bsMobileTest + ")");
+        int t1 = pbMobile.BinarySearch(Field.Mobile, "97756218");
+        Console.WriteLine("Test 1 (Mobile, known value): " + (t1 != -1 ? "PASS" : "FAIL") + " (index=" + t1 + ")");
+        int mobileComparisons = pbMobile.Comparisons;
         
         int t2 = pbMobile.BinarySearch(Field.Mobile, "00000000");
         Console.WriteLine("Test 2 (Mobile, below smallest): " + (t2 == -1 ? "PASS" : "FAIL") + " (index=" + t2 + ")");
@@ -167,19 +162,28 @@ class Program
         bool t4Pass = t4 != -1 && (t4 == 0 || !string.Equals(sortedPhonebook.GetContact(t4 - 1).LastName, "Bjerke", StringComparison.OrdinalIgnoreCase));
         Console.WriteLine("Test 4 (LastName, duplicated, lowest index): " + (t4Pass ? "PASS" : "FAIL") + " (index=" + t4 + ")");
         if (t4 > 0) Console.WriteLine("  preceding entry: " + sortedPhonebook.GetContact(t4 - 1));
+        int lastNameComparisons = sortedPhonebook.Comparisons;
 
         int t5 = sortedPhonebook.BinarySearch(Field.LastName, "Rønning");
         Console.WriteLine("Test 5 (LastName, absent): " + (t5 == -1 ? "PASS" : "FAIL") + " (index=" + t5 + ")");
+        int rønningComparisons = sortedPhonebook.Comparisons;
 
         int t6 = pbFirstName.BinarySearch(Field.FirstName, "Julie");
         bool t6Pass = t6 != -1 && (t6 == 0 || !string.Equals(pbFirstName.GetContact(t6 - 1).FirstName, "Julie", StringComparison.OrdinalIgnoreCase));
         Console.WriteLine("Test 6 (FirstName, duplicated, lowest index): " + (t6Pass ? "PASS" : "FAIL") + " (index=" + t6 + ")");
         if (t6 > 0) Console.WriteLine("  preceding entry: " + pbFirstName.GetContact(t6 - 1));
+        int firstNameComparisons = pbFirstName.Comparisons;
 
         int t7 = pbEmpty.BinarySearch(Field.LastName, "Bjerke");
         Console.WriteLine("Test 7 (empty array): " + (t7 == -1 ? "PASS" : "FAIL") + " (index=" + t7 + ")");
 
         int t8 = pbOne.BinarySearch(Field.LastName, pbOne.GetContact(0).LastName);
         Console.WriteLine("Test 8 (single-element array): " + (t8 == 0 ? "PASS" : "FAIL") + " (index=" + t8 + ")");
+        
+        Console.WriteLine("--- Section 3 comparisons ---");
+        Console.WriteLine("Mobile: " + mobileComparisons);
+        Console.WriteLine("LastName Bjerke: " + lastNameComparisons);
+        Console.WriteLine("LastName Rønning: " + rønningComparisons);
+        Console.WriteLine("FirstName Julie: " + firstNameComparisons);
     }
 }

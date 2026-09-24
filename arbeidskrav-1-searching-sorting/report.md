@@ -50,24 +50,30 @@ element is written into the buffer once per merge level no matter the starting o
 
 ## 3. Searching sorted data
 
-| Field | Target | Result | Comparisons |
-|---|---|---|---|
-| LastName | [a surname that appears several times] | index | |
-| LastName | [absent value] | -1 | |
-| Mobile | [a number from the file] | index | |
-| FirstName | [a name that appears several times] | index | |
+| Field     | Target   | Result      | Comparisons |
+|-----------|----------|-------------|-------------|
+| LastName  | Bjerke   | index 29    | 8           |
+| LastName  | Rønning  | -1          | 8           |
+| Mobile    | 97756218 | index   179 | 8           |
+| FirstName | Julie    | index    75 | 7           |
 
 Linear search on the same targets, for comparison:
 
-| Target | Comparisons (linear) | Comparisons (binary) |
-|---|---|---|
-| | | |
+| Target   | Comparisons (linear) | Comparisons (binary) |
+|----------|----------------------|----------------------|
+| Bjerke   | 200                  | 8                    |
+| Rønning  | 200                  | 8                    |
+| 97756218 | 200                  | 8                    |
+| Julie    | 200                  | 7                    |
 
-**Reflection.** [How many comparisons did binary search need against 200
-contacts, and how does that compare with log2(200)? How do you guarantee the
-first occurrence when a surname is duplicated? Sorting cost you the comparisons
-in part 2: how many searches must you perform before sorting first pays for
-itself?]
+**Reflection.**
+Binary search needed 7-8 comparisons per lookup, close to log2(200) ≈ 7,64.
+This is a big improvement over linear search's constant 200.
+The first-occurence guarantee come from not stopping at the first match.
+BinarySearch narrows leftward (high = mid - 1) and keeps searching.
+Any earlier duplicate overwrites the stored result before the search ends.
+Sorting cost 9691 comparisons, so at roughly 192 comparisons saved pr search.
+It pays for itself after about 50 searches on the same field.
 
 ## Appendix A: Complexity Reference
 
@@ -84,7 +90,11 @@ complexity.
 
 
 ## 4. Insight
-
-**One paragraph.** [What is the single most useful thing these figures taught you
-about choosing an algorithm? Write about something your own numbers show, not
-something you read.]
+My biggest takeaway is that InsertionSort's O(n²) and MergeSort's
+O(n log n) translate into a real, roughly sevenfold difference in comparisons,
+even on the exact same 200 contacts. Input order matters hugely for one
+algorithm and barely at all for the other: InsertionSort swung wildly between
+sorted and reversed data, while MergeSort stayed almost flat. And the "sorting
+pays for itself after 50 searches" figure from section 3 isn't just theoretical —
+it's a genuinely practical number I could use to decide whether sorting is
+worth it for a real dataset.
