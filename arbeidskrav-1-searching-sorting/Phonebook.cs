@@ -10,6 +10,10 @@ public class Phonebook
     }
     public Phonebook(Contact[] contacts)
     {
+        if (contacts == null)
+        {
+            throw new ArgumentNullException(nameof(contacts), "The contacts array cannot be null.");
+        }
         _contacts = contacts;
     }
     public int Count
@@ -23,6 +27,11 @@ public class Phonebook
     
     public static Phonebook Load(string csvPath)
     {
+        if (!File.Exists(csvPath))
+        {
+            throw new FileNotFoundException("Could not find the phonebook CSV file at: " + csvPath);
+        }
+
         string[] lines = File.ReadAllLines(csvPath);
         Contact[] contacts = new Contact[lines.Length - 1];
         for (int i = 1; i < lines.Length; i++)

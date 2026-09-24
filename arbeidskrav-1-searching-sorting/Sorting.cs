@@ -39,6 +39,10 @@ public static class Sorting
     
     public static void InsertionSort<T>(T[] items, IComparer<T> comparer, out int comparisons, out int swaps)
     {
+        if (items == null)
+        {
+            throw new ArgumentNullException(nameof(items), "The array to be sorted can't be null");
+        }
         comparisons = 0;
         swaps = 0;
         int n = items.Length;
@@ -63,6 +67,10 @@ public static class Sorting
 
     public static void MergeSort<T>(T[] items, IComparer<T> comparer, out int comparisons, out int swaps)
     {
+        if (items == null)
+        {
+            throw new ArgumentNullException(nameof(items), "The array to sort can't be null");
+        }
         _mergeComparisons = 0;
         _mergeSwaps = 0;
         MergeSortRange(items, 0, items.Length -1, comparer);
