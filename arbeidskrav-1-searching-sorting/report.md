@@ -42,11 +42,11 @@ entire array regardless of whether it finds 9 matches or none.
 **Reflection.**
 All six sorting runs showed MergeSort doing less work than InsertionSort — clearest
 on the as-supplied data, where MergeSort needed only 1282 comparisons against
-InsertionSort's 9691. InsertionSort swung wildly with input order: 199 comparisons
-on already-sorted data, 19571 on reverse-sorted, matching its O(n) best and O(n²)
-worst case. MergeSort barely moved (812 to 1282) regardless of shape, fitting its
-O(n log n) behavior, and its swap count stayed exactly 1544 every time, since every
-element is written into the buffer once per merge level no matter the starting order.
+InsertionSort's 9691. InsertionSort had a huge difference on already sorted data: 199 comparisons
+to 19571 on reverse-sorted, matching its O(n) best and O(n²)
+worst case. MergeSort's comparisons stayed close (812 to 1282) no matter the input shape,
+matching O(n log n). Swaps stayed exactly 1544 every time, since every element
+gets written into the buffer once per merge level regardless of order.
 
 ## 3. Searching sorted data
 
@@ -93,7 +93,7 @@ complexity.
 My biggest takeaway is that InsertionSort's O(n²) and MergeSort's
 O(n log n) translate into a real, roughly sevenfold difference in comparisons,
 even on the exact same 200 contacts. Input order matters hugely for one
-algorithm and barely at all for the other: InsertionSort swung wildly between
+algorithm and barely at all for the other: InsertionSort had a huge difference between
 sorted and reversed data, while MergeSort stayed almost flat. And the "sorting
 pays for itself after 50 searches" figure from section 3 isn't just theoretical —
 it's a genuinely practical number I could use to decide whether sorting is
