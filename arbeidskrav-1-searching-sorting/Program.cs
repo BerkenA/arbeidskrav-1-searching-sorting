@@ -101,5 +101,37 @@ class Program
         Console.WriteLine(mOneArray.Length);
         Console.WriteLine(mOneArray[0]);
         Console.WriteLine(mCmpOne);
+        
+        Contact[] asSupplied = phonebook.ToArray();
+
+        Contact[] alreadySorted = phonebook.ToArray();
+        Sorting.InsertionSort(alreadySorted, new ContactComparer(Field.LastName, SortOrder.Ascending), out _, out _);
+
+        Contact[] reverseSorted = phonebook.ToArray();
+        Sorting.InsertionSort(reverseSorted, new ContactComparer(Field.LastName, SortOrder.Descending), out _, out _);
+        
+        Contact[] benchIA = Sorting.CopyArray(asSupplied);
+        Sorting.InsertionSort(benchIA, new ContactComparer(Field.LastName, SortOrder.Ascending), out int benchIAcmp, out int benchIAswp);
+        Console.WriteLine("InsertionSort as-supplied: comparisons=" + benchIAcmp + " swaps=" + benchIAswp);
+        
+        Contact[] benchIB = Sorting.CopyArray(alreadySorted);
+        Sorting.InsertionSort(benchIB, new ContactComparer(Field.LastName, SortOrder.Ascending), out int benchIBcmp, out int benchIBswp);
+        Console.WriteLine("InsertionSort already-sorted: comparisons=" + benchIBcmp + " swaps=" + benchIBswp);
+
+        Contact[] benchIC = Sorting.CopyArray(reverseSorted);
+        Sorting.InsertionSort(benchIC, new ContactComparer(Field.LastName, SortOrder.Ascending), out int benchICcmp, out int benchICswp);
+        Console.WriteLine("InsertionSort reverse-sorted: comparisons=" + benchICcmp + " swaps=" + benchICswp);
+
+        Contact[] benchMA = Sorting.CopyArray(asSupplied);
+        Sorting.MergeSort(benchMA, new ContactComparer(Field.LastName, SortOrder.Ascending), out int benchMAcmp, out int benchMAswp);
+        Console.WriteLine("MergeSort as-supplied: comparisons=" + benchMAcmp + " swaps=" + benchMAswp);
+
+        Contact[] benchMB = Sorting.CopyArray(alreadySorted);
+        Sorting.MergeSort(benchMB, new ContactComparer(Field.LastName, SortOrder.Ascending), out int benchMBcmp, out int benchMBswp);
+        Console.WriteLine("MergeSort already-sorted: comparisons=" + benchMBcmp + " swaps=" + benchMBswp);
+
+        Contact[] benchMC = Sorting.CopyArray(reverseSorted);
+        Sorting.MergeSort(benchMC, new ContactComparer(Field.LastName, SortOrder.Ascending), out int benchMCcmp, out int benchMCswp);
+        Console.WriteLine("MergeSort reverse-sorted: comparisons=" + benchMCcmp + " swaps=" + benchMCswp);
     }
 }

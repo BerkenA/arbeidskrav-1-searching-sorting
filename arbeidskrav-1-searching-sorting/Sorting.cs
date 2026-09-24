@@ -25,6 +25,18 @@ public static class Sorting
 {
     private static int _mergeComparisons;
     private static int _mergeSwaps;
+
+    public static T[] CopyArray<T>(T[] source)
+    {
+        T[] copy = new T[source.Length];
+        for (int i = 0; i < source.Length; i++)
+        {
+            copy[i] = source[i];
+        }
+
+        return copy;
+    }
+    
     public static void InsertionSort<T>(T[] items, IComparer<T> comparer, out int comparisons, out int swaps)
     {
         comparisons = 0;
