@@ -77,4 +77,35 @@ public class Phonebook
 
         return copy;
     }
+
+    public int BinarySearch(Field field, String target)
+    {
+        _comparisons = 0;
+        int low = 0;
+        int high = _contacts.Length - 1;
+        int result_index = -1;
+
+        while (low <= high)
+        {
+            int mid = (low + high) / 2;
+            _comparisons++;
+            int result = string.Compare(Key(_contacts[mid], field), target, StringComparison.OrdinalIgnoreCase);
+
+            if (result == 0)
+            {
+                result_index = mid;
+                high = mid - 1;
+            }
+            else if (result < 0)
+            {
+                low = mid + 1;
+            }
+            else
+            {
+                high = mid - 1;
+            }
+        }
+
+        return result_index;
+    }
 }
